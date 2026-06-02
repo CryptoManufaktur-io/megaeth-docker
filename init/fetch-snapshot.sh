@@ -28,7 +28,8 @@ if [[ ! -f /data/initialized ]]; then
 
     # Download snapshot itself
     echo "Downloading snapshot ..."
-    gsutil -o GSUtil:resumable_tracker_dir=/data/.gsutil-tracker cp gs://megaeth-public-mainnet-snapshots/archive-snapshot-7141079.tar .
+    gsutil -o GSUtil:resumable_tracker_dir=/data/.gsutil-tracker \
+        cp gs://megaeth-public-mainnet-snapshots/archive-snapshot-7141079.tar . 2>&1 | tr '\r' '\n'
 
     # Mark done initialized
     touch /data/initialized
