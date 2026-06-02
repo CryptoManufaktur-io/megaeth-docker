@@ -31,7 +31,7 @@ if [[ ! -f /data/initialized ]]; then
     ln -s /data/snapshot/archive-snapshot-7141079.tar_.gstmp /archive-snapshot-7141079.tar_.gstmp
 
     gsutil -o GSUtil:resumable_tracker_dir=/data/.gsutil-tracker \
-        cp gs://megaeth-public-mainnet-snapshots/archive-snapshot-7141079.tar /data/snapshot 2>&1 | tr '\r' '\n'
+        cp gs://megaeth-public-mainnet-snapshots/archive-snapshot-7141079.tar . 2>&1 | tr '\r' '\n'
 
     # Mark done initialized
     touch /data/initialized
