@@ -15,7 +15,7 @@ services:
     image: init:megaeth
     pull_policy: never
     environment:
-      NETWORk: "${NETWORk}"
+      NETWORK: "${NETWORK}"
       MEGARETH_BOOTSTRAP_POLICY: "${MEGARETH_BOOTSTRAP_POLICY}"
       MEGARETH_ROLLUP_SEQUENCER: "${MEGARETH_ROLLUP_SEQUENCER}"
     volumes:
