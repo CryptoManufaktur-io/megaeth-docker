@@ -1,6 +1,6 @@
 # Overview
 
-Docker Compose for name-of-project
+Docker Compose for megaeth
 
 Meant to be used with [central-proxy-docker](https://github.com/CryptoManufaktur-io/central-proxy-docker) for traefik
 and Prometheus remote write; use `:ext-network.yml` in `COMPOSE_FILE` inside `.env` in that case.
@@ -9,19 +9,19 @@ If you want the RPC ports exposed locally, use `rpc-shared.yml` in `COMPOSE_FILE
 
 ## Quick Start
 
-The `./<project>d` script can be used as a quick-start:
+The `./megaethd` script can be used as a quick-start:
 
-`./<project>d install` brings in docker-ce, if you don't have Docker installed already.
+`./megaethd install` brings in docker-ce, if you don't have Docker installed already.
 
 `cp default.env .env`
 
 `nano .env` and adjust variables as needed, particularly mention-important-vars-here
 
-`./<project>d up`
+`./megaethd up`
 
 ## Software update
 
-To update the software, run `./<project>d update` and then `./<project>d up`
+To update the software, run `./megaethd update` and then `./megaethd up`
 
 ## Customization
 
@@ -30,6 +30,6 @@ add it to `COMPOSE_FILE` in `.env`
 
 ## Version
 
-name-of-project Docker uses a semver scheme.
+megaeth Docker uses a semver scheme.
 
-This is name-of-project Docker v1.0.0
+This is megaeth Docker v1.0.0
