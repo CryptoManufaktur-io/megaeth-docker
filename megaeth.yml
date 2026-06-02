@@ -15,8 +15,9 @@ services:
     image: init:megaeth
     pull_policy: never
     environment:
-      MEGARETH_BOOTSTRAP_POLICY: never
-      MEGARETH_ROLLUP_SEQUENCER: https://mainnet.megaeth.com/rpc
+      NETWORk: "${NETWORk}"
+      MEGARETH_BOOTSTRAP_POLICY: "${MEGARETH_BOOTSTRAP_POLICY}"
+      MEGARETH_ROLLUP_SEQUENCER: "${MEGARETH_ROLLUP_SEQUENCER}"
     volumes:
       - data:/data
       - ./private:/private
