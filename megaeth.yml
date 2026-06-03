@@ -33,11 +33,8 @@ services:
     env_file:
       - ./private/environment.sh
     ports:
-      - "0.0.0.0:9547:9547"
-      - "0.0.0.0:9548:9548"
-      - "0.0.0.0:8002:8002"
-      - "0.0.0.0:30305:30305/tcp"
-      - "0.0.0.0:30305:30305/udp"
+      - "${P2P_PORT}:30305/tcp"
+      - "${P2P_PORT}:30305/udp"
     volumes:
       - type: volume
         source: data
@@ -60,27 +57,32 @@ services:
         volume:
           subpath: data/node
     command: /opt/megaeth/bin/rpc-node node
-    # labels:
-    #   - traefik.enable=true
-    #   - traefik.http.routers.${RPC_HOST:-megaeth}.service=${RPC_HOST:-megaeth}
-    #   - traefik.http.routers.${RPC_HOST:-megaeth}.entrypoints=websecure
-    #   - traefik.http.routers.${RPC_HOST:-megaeth}.rule=Host(`${RPC_HOST:-megaeth}.${DOMAIN}`)
-    #   - traefik.http.routers.${RPC_HOST:-megaeth}.tls.certresolver=letsencrypt
-    #   - traefik.http.routers.${RPC_HOST:-megaeth}lb.service=${RPC_HOST:-megaeth}
-    #   - traefik.http.routers.${RPC_HOST:-megaeth}lb.entrypoints=websecure
-    #   - traefik.http.routers.${RPC_HOST:-megaeth}lb.rule=Host(`${RPC_LB:-megaeth-lb}.${DOMAIN}`)
-    #   - traefik.http.routers.${RPC_HOST:-megaeth}lb.tls.certresolver=letsencrypt
-    #   - traefik.http.services.${RPC_HOST:-megaeth}.loadbalancer.server.port=${RPC_PORT:-8545}
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${RPC_HOST:-megaeth}.service=${RPC_HOST:-megaeth}
+      - traefik.http.routers.${RPC_HOST:-megaeth}.entrypoints=websecure
+      - traefik.http.routers.${RPC_HOST:-megaeth}.rule=Host(`${RPC_HOST:-megaeth}.${DOMAIN}`)
+      - traefik.http.routers.${RPC_HOST:-megaeth}.tls.certresolver=letsencrypt
+      - traefik.http.routers.${RPC_HOST:-megaeth}lb.service=${RPC_HOST:-megaeth}
+      - traefik.http.routers.${RPC_HOST:-megaeth}lb.entrypoints=websecure
+      - traefik.http.routers.${RPC_HOST:-megaeth}lb.rule=Host(`${RPC_LB:-megaeth-lb}.${DOMAIN}`)
+      - traefik.http.routers.${RPC_HOST:-megaeth}lb.tls.certresolver=letsencrypt
+      - traefik.http.services.${RPC_HOST:-megaeth}.loadbalancer.server.port=${RPC_PORT:-9547}
 
-    #   - traefik.http.routers.${WS_HOST:-megaethws}.service=${WS_HOST:-megaethws}
-    #   - traefik.http.routers.${WS_HOST:-megaethws}.entrypoints=websecure
-    #   - traefik.http.routers.${WS_HOST:-megaethws}.rule=Host(`${WS_HOST:-megaethws}.${DOMAIN}`)
-    #   - traefik.http.routers.${WS_HOST:-megaethws}.tls.certresolver=letsencrypt
-    #   - traefik.http.routers.${WS_HOST:-megaethws}lb.service=${WS_HOST:-megaethws}
-    #   - traefik.http.routers.${WS_HOST:-megaethws}lb.entrypoints=websecure
-    #   - traefik.http.routers.${WS_HOST:-megaethws}lb.rule=Host(`${WS_LB:-megaethws-lb}.${DOMAIN}`)
-    #   - traefik.http.routers.${WS_HOST:-megaethws}lb.tls.certresolver=letsencrypt
-    #   - traefik.http.services.${WS_HOST:-megaethws}.loadbalancer.server.port=${WS_PORT:-8546}
+      - traefik.http.routers.${WS_HOST:-megaethws}.service=${WS_HOST:-megaethws}
+      - traefik.http.routers.${WS_HOST:-megaethws}.entrypoints=websecure
+      - traefik.http.routers.${WS_HOST:-megaethws}.rule=Host(`${WS_HOST:-megaethws}.${DOMAIN}`)
+      - traefik.http.routers.${WS_HOST:-megaethws}.tls.certresolver=letsencrypt
+      - traefik.http.routers.${WS_HOST:-megaethws}lb.service=${WS_HOST:-megaethws}
+      - traefik.http.routers.${WS_HOST:-megaethws}lb.entrypoints=websecure
+      - traefik.http.routers.${WS_HOST:-megaethws}lb.rule=Host(`${WS_LB:-megaethws-lb}.${DOMAIN}`)
+      - traefik.http.routers.${WS_HOST:-megaethws}lb.tls.certresolver=letsencrypt
+      - traefik.http.services.${WS_HOST:-megaethws}.loadbalancer.server.port=${WS_PORT:-9548}
+
+      - metrics.scrape=true
+      - metrics.path=/metrics
+      - metrics.port=8002
+      - metrics.network=${NETWORK:-}
     <<: *logging
 
 volumes:

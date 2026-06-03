@@ -7,7 +7,7 @@ if [[ ! -f /private/artifact-bucket-key.json ]]; then
 fi
 
 # Initialize
-if [[ ! -f /data/initialized ]]; then
+if [[ ! -f /data/.initialized ]]; then
     echo "Initializing ..."
 
     # Create needed folders
@@ -37,8 +37,13 @@ if [[ ! -f /data/initialized ]]; then
         echo "No need to download snapshot"
     fi
 
+    # Extract and remove snapshot file
+    tar -xvf /data/snapshot/archive-snapshot-7141079.tar -C /data
+    # rm /data/snapshot/archive-snapshot-7141079.tar
+
+
     # Mark done initialized
-    touch /data/initialized
+    touch /data/.initialized
 else
     echo "Already Initialized"
 fi

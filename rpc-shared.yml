@@ -1,0 +1,5 @@
+services:
+  megaeth-node:
+      - "${RPC_PORT}:9547"
+      - "${WS_PORT}:9548"
+      - "${METRICS_PORT}:8002"
