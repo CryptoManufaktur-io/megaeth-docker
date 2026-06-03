@@ -53,9 +53,9 @@ fi
 # Setup env file
 cp "/data/snapshot/megaeth-rpc-v2.0.18/${NETWORK}/environment.sh" /private/environment.sh
 
-grep -q '^MEGARETH_MAX_LOAD=' /private/environment.sh \
-  && sed -i "s|^MEGARETH_MAX_LOAD=.*|MEGARETH_MAX_LOAD=$MEGARETH_BOOTSTRAP_POLICY|" /private/environment.sh \
-  || echo "MEGARETH_MAX_LOAD=$MEGARETH_BOOTSTRAP_POLICY" >> /private/environment.sh
+grep -q '^MEGARETH_BOOTSTRAP_POLICY=' /private/environment.sh \
+  && sed -i "s|^MEGARETH_BOOTSTRAP_POLICY=.*|MEGARETH_BOOTSTRAP_POLICY=$MEGARETH_BOOTSTRAP_POLICY|" /private/environment.sh \
+  || echo "MEGARETH_BOOTSTRAP_POLICY=$MEGARETH_BOOTSTRAP_POLICY" >> /private/environment.sh
 
 grep -q '^MEGARETH_ROLLUP_SEQUENCER=' /private/environment.sh \
   && sed -i "s|^MEGARETH_ROLLUP_SEQUENCER=.*|MEGARETH_ROLLUP_SEQUENCER=$MEGARETH_ROLLUP_SEQUENCER|" /private/environment.sh \
