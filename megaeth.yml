@@ -38,7 +38,7 @@ services:
     volumes:
       - type: volume
         source: data
-        target: /opt/megaeth/bin/rpc-node
+        target: /opt/megaeth/bin/rpc-node:ro
         read_only: true
         volume:
           subpath: "snapshot/megaeth-rpc-v2.0.18/rpc-node-v2.0.18"
