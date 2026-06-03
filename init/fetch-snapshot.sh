@@ -41,6 +41,7 @@ if [[ ! -f /data/.initialized ]]; then
     rm -rf /data/node/db
     tar -xvf /data/snapshot/archive-snapshot-7141079.tar -C /data/node
     # rm /data/snapshot/archive-snapshot-7141079.tar
+    echo "Done extraction"
 
 
     # Mark done initialized
