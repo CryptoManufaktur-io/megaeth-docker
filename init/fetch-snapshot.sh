@@ -51,12 +51,12 @@ else
 fi
 
 # Setup env file
-cp "/data/snapshot/megaeth-rpc-v2.0.18/${NETWORK}/environment.sh" /private/environment.sh
+cp "/data/snapshot/megaeth-rpc-v2.0.18/${NETWORK}/environment.sh" /data/environment.sh
 
-grep -q '^MEGARETH_BOOTSTRAP_POLICY=' /private/environment.sh \
-  && sed -i "s|^MEGARETH_BOOTSTRAP_POLICY=.*|MEGARETH_BOOTSTRAP_POLICY=$MEGARETH_BOOTSTRAP_POLICY|" /private/environment.sh \
-  || echo "MEGARETH_BOOTSTRAP_POLICY=$MEGARETH_BOOTSTRAP_POLICY" >> /private/environment.sh
+grep -q '^MEGARETH_BOOTSTRAP_POLICY=' /data/environment.sh \
+  && sed -i "s|^MEGARETH_BOOTSTRAP_POLICY=.*|MEGARETH_BOOTSTRAP_POLICY=$MEGARETH_BOOTSTRAP_POLICY|" /data/environment.sh \
+  || echo "MEGARETH_BOOTSTRAP_POLICY=$MEGARETH_BOOTSTRAP_POLICY" >> /data/environment.sh
 
-grep -q '^MEGARETH_ROLLUP_SEQUENCER=' /private/environment.sh \
-  && sed -i "s|^MEGARETH_ROLLUP_SEQUENCER=.*|MEGARETH_ROLLUP_SEQUENCER=$MEGARETH_ROLLUP_SEQUENCER|" /private/environment.sh \
-  || echo "MEGARETH_ROLLUP_SEQUENCER=$MEGARETH_ROLLUP_SEQUENCER" >> /private/environment.sh
+grep -q '^MEGARETH_ROLLUP_SEQUENCER=' /data/environment.sh \
+  && sed -i "s|^MEGARETH_ROLLUP_SEQUENCER=.*|MEGARETH_ROLLUP_SEQUENCER=$MEGARETH_ROLLUP_SEQUENCER|" /data/environment.sh \
+  || echo "MEGARETH_ROLLUP_SEQUENCER=$MEGARETH_ROLLUP_SEQUENCER" >> /data/environment.sh

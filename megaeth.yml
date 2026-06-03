@@ -30,8 +30,6 @@ services:
         condition: service_completed_successfully
     image: ubuntu:24.04
     restart: unless-stopped
-    env_file:
-      - ./private/environment.sh
     ports:
       - "${P2P_PORT}:30305/tcp"
       - "${P2P_PORT}:30305/udp"
@@ -56,7 +54,8 @@ services:
         volume:
           subpath: "snapshot/megaeth-rpc-v2.0.18/${NETWORK}/genesis.json"
 
-    command: /opt/megaeth/bin/rpc-node node
+    command: >
+      bash -c "set -a && source /data/environment.sh && set +a && exec /opt/megaeth/bin/rpc-node node"
     labels:
       - traefik.enable=true
       - traefik.http.routers.${RPC_HOST:-megaeth}.service=${RPC_HOST:-megaeth}
