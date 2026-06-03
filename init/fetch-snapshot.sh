@@ -23,15 +23,19 @@ if [[ ! -f /data/initialized ]]; then
         chmod +x /data/snapshot/megaeth-rpc-v2.0.18/rpc-node-v2.0.18
         rm /data/snapshot/megaeth-rpc-v2.0.18.tar.gz
     else
-        echo "Not needed to download megaeth-rpc-v2.0.18.tar.gz"
+        echo "No need to download megaeth-rpc-v2.0.18.tar.gz"
     fi
 
     # Download snapshot itself
-    echo "Downloading snapshot ..."
-    ln -s /data/snapshot/archive-snapshot-7141079.tar_.gstmp /archive-snapshot-7141079.tar_.gstmp
-
-    gsutil -o GSUtil:resumable_tracker_dir=/data/.gsutil-tracker \
-        cp gs://megaeth-public-mainnet-snapshots/archive-snapshot-7141079.tar . 2>&1 | tr '\r' '\n'
+    if [[ ! -f /data/.download_complete ]]; then
+        echo "Downloading snapshot ..."
+        gsutil -o GSUtil:resumable_tracker_dir=/data/.gsutil-tracker \
+            cp gs://megaeth-public-mainnet-snapshots/archive-snapshot-7141079.tar /data/snapshot 2>&1 | tr '\r' '\n'
+        echo "Downloading snapshot complete ..."
+        touch /data/.download_complete
+    else
+        echo "No need to download snapshot"
+    fi
 
     # Mark done initialized
     touch /data/initialized
