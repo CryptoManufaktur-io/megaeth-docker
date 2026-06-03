@@ -36,6 +36,13 @@ services:
     volumes:
       - type: volume
         source: data
+        target: /data/environment.sh
+        read_only: true
+        volume:
+          subpath: environment.sh
+
+      - type: volume
+        source: data
         target: /opt/megaeth/bin/rpc-node
         read_only: true
         volume:
