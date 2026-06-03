@@ -54,7 +54,7 @@ services:
         target: /opt/megaeth/rpc-node/genesis.json
         read_only: true
         volume:
-          subpath: snapshot/megaeth-rpc-v2.0.18/mainnet/genesis.json
+          subpath: "snapshot/megaeth-rpc-v2.0.18/${NETWORK}/genesis.json"
 
     command: /opt/megaeth/bin/rpc-node node
     labels:
