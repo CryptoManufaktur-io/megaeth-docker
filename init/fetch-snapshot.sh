@@ -38,6 +38,7 @@ if [[ ! -f /data/.initialized ]]; then
     fi
 
     # Extract and remove snapshot file
+    rm -rf /data/node/db
     tar -xvf /data/snapshot/archive-snapshot-7141079.tar -C /data/node
     # rm /data/snapshot/archive-snapshot-7141079.tar
 
