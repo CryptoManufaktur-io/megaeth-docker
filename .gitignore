@@ -5,4 +5,5 @@
 *.bak
 *.original
 custom.yml
-private/artifact-bucket-key.json
+private/*
+!private/.hidden
