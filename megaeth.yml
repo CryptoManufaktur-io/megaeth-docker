@@ -18,6 +18,7 @@ services:
       NETWORK: "${NETWORK}"
       MEGARETH_BOOTSTRAP_POLICY: "${MEGARETH_BOOTSTRAP_POLICY}"
       MEGARETH_ROLLUP_SEQUENCER: "${MEGARETH_ROLLUP_SEQUENCER}"
+      CHAIN_VERSION_TAG: "${CHAIN_VERSION_TAG}"
     volumes:
       - data:/data
       - ./private:/private
@@ -46,7 +47,7 @@ services:
         target: /opt/megaeth/bin/rpc-node
         read_only: true
         volume:
-          subpath: snapshot/megaeth-rpc-v2.0.18/rpc-node-v2.0.18
+          subpath: "snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/rpc-node-${CHAIN_VERSION_TAG}"
 
       - type: volume
         source: data
@@ -59,7 +60,7 @@ services:
         target: /opt/megaeth/rpc-node/genesis.json
         read_only: true
         volume:
-          subpath: "snapshot/megaeth-rpc-v2.0.18/${NETWORK}/genesis.json"
+          subpath: "snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/${NETWORK}/genesis.json"
 
     command: >
       bash -c "set -a && source /data/environment.sh && set +a && exec /opt/megaeth/bin/rpc-node node"

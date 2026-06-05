@@ -6,25 +6,29 @@ if [[ ! -f /private/artifact-bucket-key.json ]]; then
     exit 1
 fi
 
+# Login to gcloud
+gcloud auth activate-service-account --key-file=/private/artifact-bucket-key.json
+
+# Create needed folders
+mkdir -p /data/snapshot /data/node/logs
+
+if [[ ! -f "/data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/${NETWORK}/environment.sh" ]]; then
+    # Remove old versions
+    rm -rf /data/snapshot/megaeth-rpc-v*
+
+    echo "Downloading and extracting megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz ..."
+    gcloud storage cp gs://megaeth-public-node-packages/${CHAIN_VERSION_TAG}/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz /data/snapshot
+    tar xf /data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz -C /data/snapshot
+    chmod +x /data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/rpc-node-${CHAIN_VERSION_TAG}
+    rm /data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz
+else
+    echo "No need to download megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz"
+fi
+
+
 # Initialize
 if [[ ! -f /data/.initialized ]]; then
     echo "Initializing ..."
-
-    # Create needed folders
-    mkdir -p /data/snapshot /data/node/logs
-
-    # Login to gcloud
-    gcloud auth activate-service-account --key-file=/private/artifact-bucket-key.json
-
-    if [[ ! -f "/data/snapshot/megaeth-rpc-v2.0.18/${NETWORK}/environment.sh" ]]; then
-        echo "Downloading and extracting megaeth-rpc-v2.0.18.tar.gz ..."
-        gcloud storage cp gs://megaeth-public-node-packages/v2.0.18/megaeth-rpc-v2.0.18.tar.gz /data/snapshot
-        tar xf /data/snapshot/megaeth-rpc-v2.0.18.tar.gz -C /data/snapshot
-        chmod +x /data/snapshot/megaeth-rpc-v2.0.18/rpc-node-v2.0.18
-        rm /data/snapshot/megaeth-rpc-v2.0.18.tar.gz
-    else
-        echo "No need to download megaeth-rpc-v2.0.18.tar.gz"
-    fi
 
     # Download snapshot itself
     if [[ ! -f /data/.download_complete ]]; then
@@ -51,7 +55,7 @@ else
 fi
 
 # Setup env file
-cp "/data/snapshot/megaeth-rpc-v2.0.18/${NETWORK}/environment.sh" /data/environment.sh
+cp "/data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/${NETWORK}/environment.sh" /data/environment.sh
 
 grep -q '^MEGARETH_BOOTSTRAP_POLICY=' /data/environment.sh \
   && sed -i "s|^MEGARETH_BOOTSTRAP_POLICY=.*|MEGARETH_BOOTSTRAP_POLICY=$MEGARETH_BOOTSTRAP_POLICY|" /data/environment.sh \
