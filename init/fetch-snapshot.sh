@@ -17,10 +17,10 @@ if [[ ! -f "/data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/${NETWORK}/environme
     rm -rf /data/snapshot/megaeth-rpc-v*
 
     echo "Downloading and extracting megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz ..."
-    gcloud storage cp gs://megaeth-public-node-packages/${CHAIN_VERSION_TAG}/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz /data/snapshot
-    tar xf /data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz -C /data/snapshot
-    chmod +x /data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/rpc-node-${CHAIN_VERSION_TAG}
-    rm /data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz
+    gcloud storage cp "gs://megaeth-public-node-packages/${CHAIN_VERSION_TAG}/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz" /data/snapshot
+    tar xf "/data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz" -C /data/snapshot
+    chmod +x "/data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/rpc-node-${CHAIN_VERSION_TAG}"
+    rm "/data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz"
 else
     echo "No need to download megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz"
 fi

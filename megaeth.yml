@@ -31,6 +31,8 @@ services:
         condition: service_completed_successfully
     image: ubuntu:24.04
     restart: unless-stopped
+    environment:
+      MEGARETH_PIPELINE_REWRITE_ENABLE: "${MEGARETH_PIPELINE_REWRITE_ENABLE:-false}"
     ports:
       - "${P2P_PORT}:30305/tcp"
       - "${P2P_PORT}:30305/udp"
