@@ -1,5 +1,9 @@
+# Expose RPC, WebSocket and metrics ports on the host
+# Usage: COMPOSE_FILE=megaeth.yml:rpc-shared.yml in .env
+
 services:
   megaeth-node:
-      - "${RPC_PORT}:9547"
-      - "${WS_PORT}:9548"
-      - "${METRICS_PORT}:8002"
+    ports:
+      - ${SHARE_IP:-}:${RPC_PORT}:9547
+      - ${SHARE_IP:-}:${WS_PORT}:9548
+      - ${SHARE_IP:-}:${METRICS_PORT}:8002
