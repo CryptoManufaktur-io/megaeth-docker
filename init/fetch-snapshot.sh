@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ ! -f /private/artifact-bucket-key.json ]]; then
-    echo "Could not find /private/artifact-bucket-key.json required file"
-    exit 1
-fi
-
-# Login to gcloud
-gcloud auth activate-service-account --key-file=/private/artifact-bucket-key.json
+# Only log in to gcloud when something has to be downloaded, so that a restart of an
+# already initialized node does not depend on the bucket credentials still being valid.
+gcloud_login() {
+    if [[ ! -f /private/artifact-bucket-key.json ]]; then
+        echo "Could not find /private/artifact-bucket-key.json required file"
+        exit 1
+    fi
+    gcloud auth activate-service-account --key-file=/private/artifact-bucket-key.json
+}
 
 # Create needed folders
 mkdir -p /data/snapshot /data/node/logs
@@ -16,6 +18,7 @@ if [[ ! -f "/data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/${NETWORK}/environme
     # Remove old versions
     rm -rf /data/snapshot/megaeth-rpc-v*
 
+    gcloud_login
     echo "Downloading and extracting megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz ..."
     gcloud storage cp "gs://megaeth-public-node-packages/${CHAIN_VERSION_TAG}/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz" /data/snapshot
     tar xf "/data/snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}.tar.gz" -C /data/snapshot
@@ -29,6 +32,7 @@ fi
 # Initialize
 if [[ ! -f /data/.initialized ]]; then
     echo "Initializing ..."
+    gcloud_login
 
     # Download snapshot itself
     if [[ ! -f /data/.download_complete ]]; then
