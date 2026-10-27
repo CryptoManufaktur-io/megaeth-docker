@@ -65,7 +65,10 @@ services:
           subpath: "snapshot/megaeth-rpc-${CHAIN_VERSION_TAG}/${NETWORK}/genesis.json"
 
     command: >
-      bash -c "set -a && source /data/environment.sh && set +a && exec /opt/megaeth/bin/rpc-node node"
+      bash -c "set -a && source /data/environment.sh && set +a
+      && export MEGARETH_HTTP_API=${RPC_HTTP_API:-eth,net,web3,trace,txpool}
+      MEGARETH_WS_API=${RPC_WS_API:-eth,net,web3,trace,txpool}
+      && exec /opt/megaeth/bin/rpc-node node"
     labels:
       - traefik.enable=true
       - traefik.http.routers.${RPC_HOST:-megaeth}.service=${RPC_HOST:-megaeth}
