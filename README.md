@@ -33,3 +33,7 @@ add it to `COMPOSE_FILE` in `.env`
 megaeth Docker uses a semver scheme.
 
 This is megaeth Docker v1.0.0
+
+## Public RPC namespaces
+
+The snapshot's `environment.sh` enables the `admin` and `debug` namespaces on the public HTTP/WebSocket RPC. This repo overrides the lists after sourcing it, so they are `eth,net,web3,trace,txpool` by default. Set `RPC_HTTP_API` / `RPC_WS_API` in your untracked `.env` to change them (a value replaces the whole list), then re-create the container with `docker compose up -d --force-recreate`; no tracked file needs editing.
